@@ -1,0 +1,63 @@
+# ===== macOS / 便利系 =====
+.DS_Store
+*.swp
+*.lock
+*.log
+
+# ===== Xcode 全般 =====
+DerivedData/
+build/
+*.moved-aside
+*.xccheckout
+*.xcuserstate
+*.xcscmblueprint
+
+# Xcode project/workspace のユーザ固有ファイル
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# 古いXcodeのユーザ設定ファイル（念のため）
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+# Playground 一時ファイル
+*.playground/**/timeline.xctimeline
+*.playground/**/playground.xcworkspace
+
+# ===== 配布物・アーカイブ =====
+*.ipa
+*.dSYM
+*.dSYM.zip
+*.xcarchive
+
+# ===== Swift Package Manager =====
+.build/
+.swiftpm/
+
+# ===== Carthage（使っている場合のみ）=====
+Carthage/Build/
+
+# ===== CocoaPods（使っている場合のみ）=====
+# Pods/
+# 注意: CocoaPods を使うなら .xcworkspace は基本コミット対象
+
+# ===== fastlane（使っている場合のみ）=====
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# ===== 環境情報・秘密情報（使っている場合のみ）=====
+.env
+# GoogleService-Info.plist は公開リポジトリなら基本コミットしない
+# GoogleService-Info.plist
+
+# プロジェクト独自: instructionsフォルダは無視
+Instructions/
