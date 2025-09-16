@@ -1,0 +1,19 @@
+{
+	"name": "xcode build server",
+	"version": "0.2",
+	"bspVersion": "2.0",
+	"languages": [
+		"c",
+		"cpp",
+		"objective-c",
+		"objective-cpp",
+		"swift"
+	],
+	"argv": [
+		"/opt/homebrew/bin/xcode-build-server"
+	],
+	"workspace": "/Users/aaa/Desktop/Forword_rev2/Forword_rev2.xcodeproj/project.xcworkspace",
+	"build_root": "/Users/aaa/Library/Developer/Xcode/DerivedData/Forword_rev2-ghuqbrqrsgzpcchgslzepsoyusjs",
+	"scheme": "Forword_rev2",
+	"kind": "xcode"
+}
