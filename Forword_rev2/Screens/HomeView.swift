@@ -49,26 +49,35 @@ struct HomeView: View {
         
     }
     
-    private var header: some View {
-        VStack(spacing: 12) {
-            // 最後に書いた時間とストリークを表示
-            Text("home.last_written \(lastWrittenText)")
-                .font(.footnote)
+    // 追加: ラベル→値の縦並び行
+    private func statRow(title: LocalizedStringKey, value: String) -> some View {
+        VStack(alignment: .center, spacing: 4) {
+            Text(title)                 
+                .font(.subheadline)
                 .foregroundColor(.white.opacity(0.9))
-            HStack(spacing: 32) {
-                statBlock(number: thisMonthCount, label: "home.this_month")
-                statBlock(number: dayStreak, label: "home.day_streak")
-            }
+            Text(value)                 // 例: "3"
+                .font(.title).bold()
+                .foregroundColor(.white)
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 32)
-        .background(
-            LinearGradient(colors: [Color.blue.opacity(0.9), Color.blue], startPoint: .top, endPoint: .bottom)
-        )
-        .cornerRadius(24)
-        .padding(.horizontal)
-        .padding(.top, 100)
     }
+
+    private var header: some View {
+    VStack(spacing: 16) {
+        statRow(title: "home.this_month", value: "\(thisMonthCount)")
+        statRow(title: "home.day_streak", value: "\(dayStreak)")
+    }
+    .frame(maxWidth: .infinity, alignment: .center)
+    .padding(.vertical, 32)
+    .background(
+        LinearGradient(colors: [Color.blue.opacity(0.9), Color.blue],
+                       startPoint: .top, endPoint: .bottom)
+    )
+    .cornerRadius(24)
+    .padding(.horizontal)
+    .padding(.top, 100)
+    }
+
     
     private var searchField: some View {
         HStack {
@@ -145,16 +154,16 @@ struct HomeView: View {
         .accessibilityLabel("home.start_writing")
     }
     
-    private func statBlock(number: Int, label: String) -> some View {
-        VStack(spacing: 4) {
-            Text("\(number)")
-                .font(.title3).bold()
-                .foregroundColor(.white)
-            Text(label)
-                .font(.caption)
-                .foregroundColor(.white.opacity(0.9))
-        }
-    }
+    // private func statBlock(number: Int, label: String) -> some View {
+    //     VStack(spacing: 4) {
+    //         Text("\(number)")
+    //             .font(.title3).bold()
+    //             .foregroundColor(.white)
+    //         Text(label)
+    //             .font(.caption)
+    //             .foregroundColor(.white.opacity(0.9))
+    //     }
+    // }
     
     private var filteredEntries: [Entry] {
         guard !searchText.trimmingCharacters(in: .whitespaces).isEmpty else {
@@ -184,15 +193,6 @@ struct HomeView: View {
         return max(streak, 0)
     }
     
-    private var lastWrittenText: String {
-        guard let last = entryStore.entries.first?.date else { return "—" }
-        let minutes = Int(Date().timeIntervalSince(last) / 60)
-        if minutes < 60 { return "\(minutes) mins ago" }
-        let hours = minutes / 60
-        if hours < 24 { return "\(hours) hours ago" }
-        let days = hours / 24
-        return "\(days) days ago"
-    }
     
     
     private func entryCard(_ entry: Entry) -> some View {
