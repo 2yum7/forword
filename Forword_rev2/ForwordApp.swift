@@ -1,10 +1,3 @@
-//
-//  ForwordApp.swift
-//  Forword
-//
-//  Created by Ibuki on 11/09/2025.
-//
-
 import SwiftUI
 
 #if os(iOS)
@@ -12,12 +5,14 @@ import SwiftUI
 struct ForwordApp: App {
     @StateObject private var entryStore = EntryStore()
     @StateObject private var draftStore = DraftStore()
+    @AppStorage("appTheme") private var themeRaw: Int = AppTheme.system.rawValue
+
     var body: some Scene {
         WindowGroup {
             HomeView()
                 .environmentObject(entryStore)
                 .environmentObject(draftStore)
-                .preferredColorScheme(nil)
+                .applyAppTheme(AppTheme(rawValue: themeRaw) ?? .system)
         }
     }
 }
