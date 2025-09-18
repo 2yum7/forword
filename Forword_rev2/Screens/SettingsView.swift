@@ -1,17 +1,33 @@
 import SwiftUI
 
+
 struct SettingsView: View {
-    @State private var reminderOn = false
+    @Environment(\.dismiss) private var dismiss
+    // ユーザー選択を永続化（0:system, 1:light, 2:dark）
+    @AppStorage("appTheme") private var themeRaw: Int = AppTheme.system.rawValue
+
+    // enum と AppStorage(Int) を橋渡しするバインディング
+    private var themeBinding: Binding<AppTheme> {
+        Binding(
+            get: { AppTheme(rawValue: themeRaw) ?? .system },
+            set: { themeRaw = $0.rawValue }
+        )
+    }
 
     var body: some View {
         Form {
-            Toggle("毎日のリマインダー", isOn: $reminderOn)
-            Picker("テーマ", selection: .constant(0)) {
-                Text("端末に合わせる").tag(0)
-                Text("ライト").tag(1)
-                Text("ダーク").tag(2)
+            Picker("settings.theme", selection: themeBinding) {
+                ForEach(AppTheme.allCases) { theme in
+                    Text(theme.labelKey).tag(theme)
+                }
             }
         }
-        .navigationTitle("設定")
+        .navigationTitle("settings.theme")
+        .toolbar {
+            // iOS17+: .topBarLeading / それ以前: .navigationBarLeading
+            ToolbarItem(placement: .topBarLeading) {
+                Button("common.cancel") { dismiss() } // String Catalog に合わせる
+            }
+        }
     }
 }
