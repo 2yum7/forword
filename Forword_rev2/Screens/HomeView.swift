@@ -51,14 +51,21 @@ struct HomeView: View {
     
     private var header: some View {
         VStack(spacing: 12) {
-            // 最後に書いた時間とストリークを表示
-            Text("home.last_written \(lastWrittenText)")
+
+        HStack(spacing: 32) {
+            Text("home.this_month \(thisMonthCount)")
                 .font(.footnote)
                 .foregroundColor(.white.opacity(0.9))
+            Text("home.day_streak \(dayStreak)")
+                .font(.footnote)
+                .foregroundColor(.white.opacity(0.9))
+        }
+           /*   
             HStack(spacing: 32) {
                 statBlock(number: thisMonthCount, label: "home.this_month")
                 statBlock(number: dayStreak, label: "home.day_streak")
             }
+            */
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 32)
@@ -184,15 +191,6 @@ struct HomeView: View {
         return max(streak, 0)
     }
     
-    private var lastWrittenText: String {
-        guard let last = entryStore.entries.first?.date else { return "—" }
-        let minutes = Int(Date().timeIntervalSince(last) / 60)
-        if minutes < 60 { return "\(minutes) mins ago" }
-        let hours = minutes / 60
-        if hours < 24 { return "\(hours) hours ago" }
-        let days = hours / 24
-        return "\(days) days ago"
-    }
     
     
     private func entryCard(_ entry: Entry) -> some View {
