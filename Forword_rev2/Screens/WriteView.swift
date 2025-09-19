@@ -38,14 +38,18 @@ struct WriteView: View {
                     if text.isEmpty {
                         Text("write.placeholder")
                             .foregroundColor(.secondary)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 16)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 12)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-                // Bottom bar with save button
+ 
+                // Bottom bar discard and save button
                 HStack {
+                    Button("common.discard") {
+                        discardAndClose()
+                    }
                     Spacer()
                     Button("common.save") {
                         finishAndSave()
@@ -54,6 +58,7 @@ struct WriteView: View {
                     .controlSize(.large)
                 }
                 .padding()
+
             }
             .navigationTitle("write.title")
             .navigationBarTitleDisplayMode(.inline)
@@ -103,6 +108,14 @@ struct WriteView: View {
         let entry = Entry(id: UUID(), date: Date(), text: trimmed, wordCount: wordCount)
         entryStore.entries.insert(entry, at: 0)
         // Clear draft
+        text = ""
+        previousText = ""
+        draftStore.draftText = ""
+        UserDefaults.standard.removeObject(forKey: DraftStore.userDefaultsKey)
+        dismiss()
+    }
+
+    private func discardAndClose() {
         text = ""
         previousText = ""
         draftStore.draftText = ""
